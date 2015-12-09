@@ -1,4 +1,4 @@
--- SQL – Data Manipulation Language (DML)
+-- SQL â€“ Data Manipulation Language (DML)
 -- List all the students who their last name are James.
 select * 
 from student
@@ -18,7 +18,7 @@ where lastname IS NULL;
 -- List all the students who live in Toronto or Vancouver
 select * 
 from student 
-where city ='toronto' or city ='vancouver'
+where city ='toronto' or city ='vancouver';
 -- Another way to write the above SQL command
 select * 
 from student 
@@ -29,7 +29,7 @@ select *
 from student 
 order by firstname, lastname;
  
--- List the students’ ID in the takes table with no duplication in the student ID. (there might be a student that takes multiple courses)
+-- List the studentsâ€™ ID in the takes table with no duplication in the student ID. (there might be a student that takes multiple courses)
 select Distinct(studentID)
 from take;
  
@@ -43,25 +43,25 @@ where productCategory = 241;
 -- List the average price of all products under category with ID 241.
 select avg(price)
 from product 
-where productCategory = 241
+where productCategory = 241;
  
 -- The aggregation function only returns one single value, if you want to combine aggregation with other fields to return multiple values, you need to use group by.
 -- List the average price of each category.
 select avg(price), productCategory 
 from product 
-group by productCategory
+group by productCategory;
  
 -- List the average price of each category that the average price is higher than 100.
 select avg(price) as avgPrice, productCategory 
 from product 
 group by productCategory
-having avgPrice &gt; 100
+having avgPrice &gt; 100;
  
 -- Use Join in Relational Database
 -- There are different kinds of joins in SQL, by default join is set to be inner join by most DataBase Management System (DBMS). An inner join only returns the records that found a match both of the tables involving in the inner join. As an illustration, if we have a person and contact tables, and there is a person that does not have a record in contact table, the inner join would not return that person.
 select * 
 from person
-Inner Join contact On person.personID = contact.personID 
+Inner Join contact On person.personID = contact.personID ;
  
 -- The following figure illustrates all kinds of joins that could happen when joining two tables over each other.
 
@@ -70,13 +70,13 @@ select *
 from (( student
 Inner Join take On student.studentID = take.studentID )
 Inner Join course On takes.courseID = course.courseID )
-where course.courseTitle = ‘Database’
+where course.courseTitle = â€˜Databaseâ€™;
 -- Or could be written without brackets as follow
 select * 
 from student
 Inner Join take On student.studentID = take.studentID
 Inner Join course On takes.courseID = course.courseID 
-where course.courseTitle = ‘Database’
+where course.courseTitle = â€˜Databaseâ€™;
  
 -- Insert, Update, and Delete
 -- To create a new record in the student table:
@@ -87,13 +87,13 @@ values ('Danial','Javanmardi2', 21);
 -- To update a record in the student table:
 Update student
 set studentEmail = 'info@mandanemedia.com', studentLastName = 'Javanmardi2'
-where studentID = 11
+where studentID = 11;
  
-To delete a record in the student table:
+-- To delete a record in the student table:
 Delete from student
-where studentID = 11
+where studentID = 11;
  
--- SQL – Data Definition Language (DDL)
+-- SQL â€“ Data Definition Language (DDL)
 Create student table
 Create student
 (studentID integer Primary Key,
@@ -111,11 +111,11 @@ Drop table student;
 -- To delete all records in the student table
 Truncate table student;
 
--- SQL – Data Control Language (DCL)
+-- SQL â€“ Data Control Language (DCL)
 -- Giving permission to list records in the student table
 Grant select 
 On universityDatabase.student 
-To danial
+To danial;
  
 -- Getting back the permission was give to list records in the student table
 Revoke select 
@@ -125,7 +125,7 @@ from danial;
 -- Explicitly prevent a user from receiving special permission
 Deny delete
 On universityDatabase.student 
-To webBrowser
+To webBrowser;
 
 -- Indexing in Database
 -- Create student table
@@ -137,11 +137,11 @@ age integer);
  
 -- Create clustered indexing on studentD
 Create Clustered Index myfirstIndexing_name
-On student (studentID ASC)
+On student (studentID ASC);
  
 -- Create Non-clustered indexing on studentLastName
 Create Nonclustered Index mySecondIndexing_name
-On student (studentLasttName  ASC)
+On student (studentLasttName  ASC);
  
 -- Store Procedure
 Create Procedure avgPriceForEachProductCategory
@@ -175,13 +175,13 @@ call orderWithTotalPrice;
  
 -- Nested SQL queries
 -- There are times that you need multiple nested queries to get the list that you want.
-List all employees who their salaries are bigger than the Jack’s salary.
+List all employees who their salaries are bigger than the Jackâ€™s salary.
 select employeeName
 from employee e1
 where salary &gt;
      ( select salary
 from employee e2
-       where employeeName = 'Jack' )
+       where employeeName = 'Jack' );
 -- List all of the employees who their salaries are bigger than the salary of Jack, Steven, and Alex.
 -- To simplify it, if we know the salary of each of them, we can write it as below.
 select employeeName
@@ -193,23 +193,23 @@ from employee e1
 where salary &gt; All 
      ( select salary
 from employee e2
-       where e2.employeeName='Jack' or e2.employeeName='Steven' or e2.employeeName='Alex')
+       where e2.employeeName='Jack' or e2.employeeName='Steven' or e2.employeeName='Alex');
  
 -- Increase the salaries of all of the employees by 20% who have worked in the company since 2012.
 -- In this case, we need to break the question into smaller chunks, so list all the employees who have worked in the company since 2012. It is a simple select query as below.
 select *
 from employee
-where employmentYear &gt; 2011
+where employmentYear &gt; 2011;
 -- Also, we need to write query to update the salary of employee by 20%
 update employee
-set salary = salary*0.25
+set salary = salary*0.25;
 -- Finally, we combine these two queries into a nested query as below:
 update employee
 set salary = salary * 0.25
 where employeeID in 
 ( select employeeID 
   from employee e2
-  where employmentYear &gt; 2011 )
+  where employmentYear &gt; 2011 );
  
 -- Copy all of the records from the employee to employee_backup table.
 -- We have an employee table, and we create a new empty, identical table called employee_backup( with same structure).
@@ -217,7 +217,7 @@ insert into employee_backup
 select * from employee
 where employeeID in 
  		( select employeeID 
-  from employee )
+  from employee );
 
 -- Difference between Any and All
 -- The difference between Any(Some) and All in the nested query illustrated by example as below.
