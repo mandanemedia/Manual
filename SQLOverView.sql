@@ -55,7 +55,7 @@ group by productCategory;
 select avg(price) as avgPrice, productCategory 
 from product 
 group by productCategory
-having avgPrice < 100;
+having avgPrice > 100;
  
 -- Use Join in Relational Database
 -- There are different kinds of joins in SQL, by default join is set to be inner join by most DataBase Management System (DBMS). An inner join only returns the records that found a match both of the tables involving in the inner join. As an illustration, if we have a person and contact tables, and there is a person that does not have a record in contact table, the inner join would not return that person.
@@ -178,7 +178,7 @@ call orderWithTotalPrice;
 List all employees who their salaries are bigger than the Jack’s salary.
 select employeeName
 from employee e1
-where salary <
+where salary >
      ( select salary
 from employee e2
        where employeeName = 'Jack' );
@@ -186,11 +186,11 @@ from employee e2
 -- To simplify it, if we know the salary of each of them, we can write it as below.
 select employeeName
 from employee
-where salary < All (6500, 60000, 75000);
+where salary > All (6500, 60000, 75000);
 -- And, how about if we do not aware their salaries. We need to revise the SQL commands to be a nested ones as below:
 select e1.employeeName
 from employee e1
-where salary < All 
+where salary > All 
      ( select salary
 from employee e2
        where e2.employeeName='Jack' or e2.employeeName='Steven' or e2.employeeName='Alex');
@@ -199,7 +199,7 @@ from employee e2
 -- In this case, we need to break the question into smaller chunks, so list all the employees who have worked in the company since 2012. It is a simple select query as below.
 select *
 from employee
-where employmentYear < 2011;
+where employmentYear > 2011;
 -- Also, we need to write query to update the salary of employee by 20%
 update employee
 set salary = salary*0.25;
@@ -209,7 +209,7 @@ set salary = salary * 0.25
 where employeeID in 
 ( select employeeID 
   from employee e2
-  where employmentYear < 2011 );
+  where employmentYear > 2011 );
  
 -- Copy all of the records from the employee to employee_backup table.
 -- We have an employee table, and we create a new empty, identical table called employee_backup( with same structure).
@@ -223,17 +223,17 @@ where employeeID in
 -- The difference between Any(Some) and All in the nested query illustrated by example as below.
 select employeeName
 from employee
-where salary < All (6500, 60000, 75000);
+where salary > All (6500, 60000, 75000);
 -- This equals to below statement:
 select employeeName
 from employee
-where salary < 6500 and salary < 60000 and salary < 75000;
+where salary > 6500 and salary > 60000 and salary > 75000;
  
 -- While for any instead of and we use or, as below.
 select employeeName
 from employee
-where salary < Any (6500, 60000, 75000);
+where salary > Any (6500, 60000, 75000);
 -- This equals to below statement:
 select employeeName
 from employee
-where salary < 6500 or salary < 60000 or salary < 75000;
+where salary > 6500 or salary > 60000 or salary > 75000;
